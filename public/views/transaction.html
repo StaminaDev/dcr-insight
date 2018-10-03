@@ -1,4 +1,4 @@
-<div data-ng-include src="'/views/includes/connection.html'"></div>
+<div data-ng-include src="'views/includes/connection.html'"></div>
 <section data-ng-controller="transactionsController" data-ng-init="findThis()">
   <div class="secondary_navbar hidden-xs hidden-sm" scroll data-ng-class="{'hidden': !secondaryNavbar}" data-ng-show="tx.txid" data-ng-init="hideSNavbar=0">
     <div class="container" data-ng-if="!hideSNavbar">
@@ -6,7 +6,7 @@
           <h3 translate>Transaction</h3>
           <div class="ellipsis"> 
             <small>{{tx.txid}}</small> 
-            <span class="btn-copy" ngclipboard data-clipboard-text={{tx.txid}}></span>
+            <span class="btn-copy" clip-copy="tx.txid"></span>
           </div>
       </div>
       <div class="col-md-6 col-lg-5 text-right">
@@ -16,7 +16,7 @@
         </span>
         <span data-ng-show="!tx.confirmations" 
           class="txvalues txvalues-danger" translate>Unconfirmed Transaction!</span>
-        <span class="txvalues txvalues-primary">{{$root.currency.getConvertion(tx.valueOut) || tx.valueOut + ' DCR' }}</span>
+        <span class="txvalues txvalues-primary">{{$root.currency.getConvertion(tx.valueOut) || tx.valueOut + ' DASH' }}</span>
       </div>
     </div>
     <div class="hide_snavbar">
@@ -43,7 +43,7 @@
       <div class="well well-sm ellipsis">
         <strong translate>Transaction</strong> 
         <span class="txid text-muted">{{tx.txid}}</span>
-        <span class="btn-copy" ngclipboard data-clipboard-text={{tx.txid}}></span>
+        <span class="btn-copy" clip-copy="tx.txid"></span>
       </div>
       <h2 translate>Summary</h2>
       <table class="table" style="table-layout: fixed">
@@ -54,7 +54,7 @@
         </tr>
         <tr data-ng-show="tx.fees">
           <td><strong translate>Fee Rate</strong></td>
-          <td class="text-muted text-right">{{$root.currency.getConvertion((tx.fees * 1000) / tx.size) + ' per kB' || ((tx.fees * 1000) / tx.size) + 'DCR per kB'}}</td>
+          <td class="text-muted text-right">{{$root.currency.getConvertion((tx.fees * 1000) / tx.size) + ' per kB' || ((tx.fees * 1000) / tx.size) + 'DASH per kB'}}</td>
         </tr>
         <tr>
           <td><strong translate>Received Time</strong></td>
@@ -63,14 +63,14 @@
         </tr>
         <tr>
           <td><strong translate>Mined Time</strong></td>
-          <td data-ng-show="tx.time" class="text-muted text-right">{{tx.blocktime * 1000|date:'medium'}}</td>
-          <td data-ng-show="!tx.time" class="text-muted text-right">N/A</td>
+          <td data-ng-show="tx.blocktime" class="text-muted text-right">{{tx.blocktime * 1000|date:'medium'}}</td>
+          <td data-ng-show="!tx.blocktime" class="text-muted text-right">N/A</td>
         </tr>
         <tr>
           <td><strong translate>Included in Block</strong></td>
           <td data-ng-show="tx.blockhash" class="text-muted text-right"> 
             <div class="ellipsis">
-              <a href="/block/{{tx.blockhash}}">{{tx.blockhash}}</a>
+              <a href="block/{{tx.blockhash}}">{{tx.blockhash}}</a>
             </div>
           <td data-ng-show="!tx.blockhash" class="text-muted text-right">Unconfirmed</td>
         </tr>
@@ -82,24 +82,8 @@
           <td><strong>Coinbase</strong></td>
           <td class="text-muted text-right">
             <div class="ellipsis">
-                <span class="btn-copy ng-isolate-scope" ngclipboard data-clipboard-text={{tx.vin[0].coinbase}}></span>
+                <span class="btn-copy ng-isolate-scope" clip-copy="tx.vin[0].coinbase"></span>
                 <span class="ng-binding">{{tx.vin[0].coinbase}}</span>
-            </div>
-          </td>
-        </tr>
-	<tr data-ng-show="tx.isStakeGen">
-          <td><strong>Ticket that was spent</strong></td>
-          <td class="text-muted text-right">
-            <div class="ellipsis">
-              <a href="/tx/{{tx.ticketid}}">{{tx.ticketid}}</a>
-            </div>
-          </td>
-        </tr>
-	<tr data-ng-show="tx.isStakeRtx">
-          <td><strong>Ticket that was revoked</strong></td>
-          <td class="text-muted text-right">
-            <div class="ellipsis">
-              <a href="/tx/{{tx.ticketid}}">{{tx.ticketid}}</a>
             </div>
           </td>
         </tr>
@@ -108,7 +92,7 @@
     </div>
     <h2 translate>Details</h2>
     <div class="block-tx" data-ng-if="tx.txid">
-      <div data-ng-include src="'/views/transaction/tx.html'"></div>
+      <div data-ng-include src="'views/transaction/tx.html'"></div>
     </div>
   </div>
 </section>

@@ -4,47 +4,47 @@
 angular.module('insight').config(function($routeProvider) {
   $routeProvider.
     when('/block/:blockHash', {
-      templateUrl: '/views/block.html',
-      title: 'Decred Block '
+      templateUrl: 'views/block.html',
+      title: 'Dash Block '
     }).
     when('/block-index/:blockHeight', {
       controller: 'BlocksController',
-      templateUrl: '/views/redirect.html'
+      templateUrl: 'views/redirect.html'
     }).
     when('/tx/send', {
-      templateUrl: '/views/transaction_sendraw.html',
+      templateUrl: 'views/transaction_sendraw.html',
       title: 'Broadcast Raw Transaction'
     }).
     when('/tx/:txId/:v_type?/:v_index?', {
-      templateUrl: '/views/transaction.html',
-      title: 'Decred Transaction '
+      templateUrl: 'views/transaction.html',
+      title: 'Dash Transaction '
     }).
     when('/', {
-      templateUrl: '/views/index.html',
+      templateUrl: 'views/index.html',
       title: 'Home'
     }).
     when('/blocks', {
-      templateUrl: '/views/block_list.html',
-      title: 'Decred Blocks solved Today'
+      templateUrl: 'views/block_list.html',
+      title: 'Dash Blocks solved Today'
     }).
     when('/blocks-date/:blockDate/:startTimestamp?', {
-      templateUrl: '/views/block_list.html',
-      title: 'Decred Blocks solved '
+      templateUrl: 'views/block_list.html',
+      title: 'Dash Blocks solved '
     }).
     when('/address/:addrStr', {
-      templateUrl: '/views/address.html',
-      title: 'Decred Address '
+      templateUrl: 'views/address.html',
+      title: 'Dash Address '
     }).
     when('/status', {
-      templateUrl: '/views/status.html',
+      templateUrl: 'views/status.html',
       title: 'Status'
     }).
     when('/messages/verify', {
-      templateUrl: '/views/messages_verify.html',
+      templateUrl: 'views/messages_verify.html',
       title: 'Verify Message'
     })
     .otherwise({
-      templateUrl: '/views/404.html',
+      templateUrl: 'views/404.html',
       title: 'Error'
     });
 });
@@ -55,7 +55,8 @@ angular.module('insight')
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
   })
-  .run(function($rootScope, $route, $location, $routeParams, $anchorScroll, ngProgress, gettextCatalog, amMoment) {
+  .run(function($rootScope, $route, $location, $routeParams, $anchorScroll, ngProgressFactory, gettextCatalog, amMoment) {
+    var ngProgress = ngProgressFactory.createInstance();
     gettextCatalog.currentLanguage = defaultLanguage;
     amMoment.changeLocale(defaultLanguage);
     $rootScope.$on('$routeChangeStart', function() {
@@ -68,7 +69,6 @@ angular.module('insight')
       //Change page title, based on Route information
       $rootScope.titleDetail = '';
       $rootScope.title = $route.current.title;
-      $rootScope.isCollapsed = true;
       $rootScope.currentAddr = null;
 
       $location.hash($routeParams.scrollTo);

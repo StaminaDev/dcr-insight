@@ -80,39 +80,6 @@ function($scope, $rootScope, $routeParams, $location, Global, Transaction, Trans
   };
 
   var _paginate = function(data) {
-    newdata = data.txs.sort(function(a, b) {
-      if (a.isStakeGen && !b.isStakeGen) {
-        return -1;
-      } else if (!a.isStakeGen && b.isStakeGen) {
-        return 1;
-      } else if (a.isStakeGen && b.isStakeGen) {
-	return 0;
-      } else if (!a.isStakeGen && !b.isStakeGen) {
-        if (a.isStakeTx && !b.isStakeTx) {
-	  return -1;
-	} else if (!a.isStakeTx && b.isStakeTx) {
-	  return 1;
-	} else if (a.isStakeTx && b.isStakeTx) {
-	  return 0;
-	} else if (a.isStakeRtx && !b.isStakeRtx) {
-	  return -1;
-	} else if (!a.isStakeRtx && b.isStakeRtx) {
-	  return 1;
-	} else if (a.isStakeRtx && b.isStakeRtx) {
-	  return 0;
-	} else if (a.isCoinBase && !b.isCoinBase) {
-	  return -1;
-	} else if (!a.isCoinBase && b.isCoinBase) {
-	  return 1;
-	} else if (a.fees > b.fees) {
-	  return -1;
-	} else if (a.fees < b.fees) { 
-	  return 1; 
-        }
-      }
-      return 0;
-    });
-    data.txs = newdata;
     $scope.loading = false;
 
     pagesTotal = data.pagesTotal;
@@ -222,7 +189,7 @@ angular.module('insight.transactions').controller('SendRawTransactionController'
       rawtx: $scope.transaction
     };
     $scope.status = 'loading';
-    $http.post('/api/tx/send', postData)
+    $http.post(window.apiPrefix + '/tx/send', postData)
       .success(function(data, status, headers, config) {
         if(typeof(data.txid) != 'string') {
           // API returned 200 but the format is not known

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('insight.currency').controller('CurrencyController',
+angular.module('insight.currency', ['ui.router','ui.bootstrap']).controller('CurrencyController',
   function($scope, $rootScope, Currency) {
     $rootScope.currency.symbol = defaultCurrency;
 
@@ -20,17 +20,19 @@ angular.module('insight.currency').controller('CurrencyController',
 
         if (this.symbol === 'USD') {
           response = _roundFloat((value * this.factor), 2);
-        } else if (this.symbol === 'mDCR') {
+        } else if (this.symbol === 'mDASH') {
           this.factor = 1000;
           response = _roundFloat((value * this.factor), 5);
-        } else if (this.symbol === 'atoms') {
-          this.factor = 100000000;
+        } else if (this.symbol === 'uDASH') {
+          this.factor = 1000000;
           response = _roundFloat((value * this.factor), 2);
         } else {
           this.factor = 1;
           response = value;
-          response=response.toFixed(8);
         }
+        // prevent sci notation
+        if (response < 1e-7) response=response.toFixed(8);
+
         return response + ' ' + this.symbol;
       }
 
@@ -45,10 +47,10 @@ angular.module('insight.currency').controller('CurrencyController',
         Currency.get({}, function(res) {
           $rootScope.currency.factor = $rootScope.currency.bitstamp = res.data.bitstamp;
         });
-      } else if (currency === 'mDCR') {
+      } else if (currency === 'mDASH') {
         $rootScope.currency.factor = 1000;
-      } else if (currency === 'atoms') {
-        $rootScope.currency.factor = 100000000;
+      } else if (currency === 'uDASH') {
+        $rootScope.currency.factor = 1000000;
       } else {
         $rootScope.currency.factor = 1;
       }

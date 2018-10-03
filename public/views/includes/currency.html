@@ -1,15 +1,18 @@
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+<a uib-dropdown-toggle data-toggle="dropdown" href="#">
   {{currency.symbol}} <span class="caret"></span>
 </a>
-<ul class="dropdown-menu">
+<ul uib-dropdown-menu>
   <li>
-  <a href="#" data-ng-click="setCurrency('DCR')" data-ng-class="{active: currency.symbol == 'DCR'}">DCR</a>
+  <a data-ng-click="setCurrency('USD')" data-ng-class="{active: currency.symbol == 'USD'}">USD</a>
   </li>
   <li>
-  <a href="#" data-ng-click="setCurrency('mDCR')" data-ng-class="{active: currency.symbol == 'mDCR'}">mDCR</a>
+  <a data-ng-click="setCurrency('DASH')" data-ng-class="{active: currency.symbol == 'DASH'}">DASH</a>
   </li>
   <li>
-  <a href="#" data-ng-click="setCurrency('atoms')" data-ng-class="{active: currency.symbol == 'atoms'}">atoms</a>
+  <a data-ng-click="setCurrency('mDASH')" data-ng-class="{active: currency.symbol == 'mDASH'}">mDASH</a>
+  </li> 
+  <li>
+  <a data-ng-click="setCurrency('uDASH')" data-ng-class="{active: currency.symbol == 'uDASH'}">uDASH</a>
   </li>
 </ul>
 

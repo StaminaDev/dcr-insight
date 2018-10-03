@@ -15,6 +15,18 @@ angular.module('insight.blocks').controller('BlocksController',
       $location.path('/');
     });
   }
+  
+  var toUTCDate = function(date){
+    var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    return _utc;
+  };
+
+  var millisToUTCDate = function(millis){
+    return toUTCDate(new Date(millis* 1000));
+  };
+
+  $scope.toUTCDate = toUTCDate;
+  $scope.millisToUTCDate = millisToUTCDate;
 
   //Datepicker
   var _formatTimestamp = function (date) {
@@ -31,23 +43,9 @@ angular.module('insight.blocks').controller('BlocksController',
     }
   });
 
-  $scope.onSuccess = function(e) {
-      console.info('Action:', e.action);
-      console.info('Text:', e.text);
-      console.info('Trigger:', e.trigger);
-
-      e.clearSelection();
-  };
-
-  $scope.onError = function(e) {
-      console.error('Action:', e.action);
-      console.error('Trigger:', e.trigger);
-  };
   $scope.openCalendar = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
     $scope.opened = true;
+    setTimeout(function(){ angular.element(document.querySelector('.uib-datepicker-popup'))[0].style.display = "block"; }, 100);
   };
 
   $scope.humanSince = function(time) {
@@ -80,6 +78,12 @@ angular.module('insight.blocks').controller('BlocksController',
       $scope.loading = false;
       $scope.blocks = res.blocks;
       $scope.pagination = res.pagination;
+      $scope.pagination.olderBlocks = $scope.pagination.moreTs;
+      for (var key in $scope.blocks) {
+        if($scope.blocks[key].time < $scope.pagination.olderBlocks){
+          $scope.pagination.olderBlocks = $scope.blocks[key].time;
+        }
+		  }
     });
   };
 

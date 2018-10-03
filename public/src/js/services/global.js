@@ -4,9 +4,14 @@
 angular.module('insight.system')
   .factory('Global',[
     function() {
+      return {
+        get: function () {
+          return null;
+        }
+      }
     }
   ])
   .factory('Version',
     function($resource) {
-      return $resource('/api/version');
+      return $resource(window.apiPrefix + '/version');
   });
