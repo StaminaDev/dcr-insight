@@ -155,6 +155,11 @@ a.email:hover {
   color:  #b19fce;
 }
 
+.links:hover {
+  color: #A0D26A !important;
+  text-decoration: none !important;
+}
+
 .navbar-nav>li>a:hover, .navbar-nav>.active>a:hover {
   color: #b19fce !important;
   background-color: #5c93ad !important;
