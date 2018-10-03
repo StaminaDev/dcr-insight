@@ -155,7 +155,7 @@ a.email:hover {
   color:  #b19fce;
 }
 
-.links:hover {
+#footer a:hover {
   color: #A0D26A !important;
   text-decoration: none !important;
 }
